@@ -1,7 +1,7 @@
 import time
+from datetime import datetime
 import numpy as np
 import pandas as pd
-import dask.dataframe as dd
 import os
 
 
@@ -20,7 +20,7 @@ def generate_customer_profiles_table(n_customers, random_state=0):
         mean_amount = np.random.uniform(5,100) # Arbitrary (but sensible) value 
         std_amount = mean_amount/2 # Arbitrary (but sensible) value
         
-        mean_nb_tx_per_day = np.random.uniform(0,12) # Arbitrary (but sensible) value 
+        mean_nb_tx_per_day = np.random.uniform(0,6) # Arbitrary (but sensible) value 
         
         customer_id_properties.append([customer_id,
                                       x_customer_id, y_customer_id,
@@ -77,7 +77,7 @@ def get_list_terminals_within_radius(customer_profile, x_y_terminals, r):
     
 
 
-def generate_transactions_table(customer_profile, start_date = "2018-04-01", nb_days = 160):
+def generate_transactions_table(customer_profile, start_date = "2023-01-01", nb_days = 160):
     
     customer_transactions = []
 
@@ -122,7 +122,8 @@ def generate_transactions_table(customer_profile, start_date = "2018-04-01", nb_
     customer_transactions = pd.DataFrame(customer_transactions, columns=['TX_TIME_SECONDS', 'TX_TIME_DAYS', 'CUSTOMER_ID', 'TERMINAL_ID', 'TX_AMOUNT'])
     
     if len(customer_transactions)>0:
-        customer_transactions['TX_DATETIME'] = pd.to_datetime(customer_transactions["TX_TIME_SECONDS"], unit='s', origin=start_date)
+        customer_transactions['TX_DATETIME'] = pd.to_datetime(customer_transactions["TX_TIME_SECONDS"], unit='s', origin=start_date) 
+        # customer_transactions['TX_DATETIME'] = datetime.strptime(customer_transactions['TX_DATETIME'] , "%Y-%m-%d %H:%M:%S")
         customer_transactions=customer_transactions[['TX_DATETIME','CUSTOMER_ID', 'TERMINAL_ID', 'TX_AMOUNT','TX_TIME_SECONDS', 'TX_TIME_DAYS']]
     
     return customer_transactions  
@@ -164,18 +165,22 @@ def generate_dataset(n_customers = 12000, n_terminals = 16000, nb_days=365, star
     return (customer_profiles_table, terminal_profiles_table, transactions_df)
     
 
-(customer_profiles_table, terminal_profiles_table, transactions_df) = generate_dataset(n_customers = 900, 
-                                                                                        n_terminals = 2000, 
-                                                                                        nb_days=160, 
+(customer_profiles_table, terminal_profiles_table, transactions_df) = generate_dataset(n_customers = 3000, 
+                                                                                        n_terminals = 5000, 
+                                                                                        nb_days=180, 
                                                                                         start_date="2024-01-01", 
                                                                                         r=5)
 
 
 print(transactions_df.shape)
 
-customer_profiles_table.to_csv('data_sets_50/customer.csv', index=False)
-terminal_profiles_table.to_csv('data_sets_50/terminal.csv', index=False)
-transactions_df.to_csv('data_sets_50/transaction.csv', index=True)
+for i, row in enumerate(transactions_df):
+    transactions_df.iloc[i][1] = datetime.strptime(str(transactions_df.iloc[i][1]) , "%Y-%m-%d %H:%M:%S")
+
+
+customer_profiles_table.to_csv('new_datasets/data_sets_50/customer.csv', index=False)
+terminal_profiles_table.to_csv('new_datasets/data_sets_50/terminal.csv', index=False)
+transactions_df.to_csv('new_datasets/data_sets_50/transaction.csv', index=True)
 
 file_path = 'data_sets_50/transaction.csv'
 file_size = os.path.getsize(file_path) / (1024 * 1024)
