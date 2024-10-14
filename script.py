@@ -108,9 +108,9 @@ with GraphDatabase.driver(URI, auth=AUTH) as driver:
         session.run(load_terminal).data()
         print('terminal')
         session.run(load_transaction_node).data()
-        print('tran node')
+        print('transaction node')
         session.run(load_transaction).data()
-        print('tran')
+        print('transaction')
 
 
 """
