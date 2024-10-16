@@ -168,7 +168,7 @@ def generate_dataset(n_customers = 10000, n_terminals = 11000, nb_days=180, star
     return (customer_profiles_table, terminal_profiles_table, transactions_df)
     
 
-(customer_profiles_table, terminal_profiles_table, transactions_df) = generate_dataset(n_customers = 10300, 
+(customer_profiles_table, terminal_profiles_table, transactions_df) = generate_dataset(n_customers = 10000, 
                                                                                         n_terminals = 6500, 
                                                                                         nb_days=180, 
                                                                                         start_date="2024-01-01", 
@@ -185,7 +185,7 @@ customer_profiles_table.to_csv('new_datasets/data_sets_200/customer.csv', index=
 terminal_profiles_table.to_csv('new_datasets/data_sets_200/terminal.csv', index=False)
 transactions_df.to_csv('new_datasets/data_sets_200/transaction.csv', index=True)
 
-file_path = 'new_datasets/data_sets_200/transaction.csv'
+file_path = 'new_datasets/data_sets_100/transaction.csv'
 file_size = os.path.getsize(file_path) / (1024 * 1024)
 print(f"The size of '{file_path}' is: {file_size} MB")
 print(len(transactions_df))
