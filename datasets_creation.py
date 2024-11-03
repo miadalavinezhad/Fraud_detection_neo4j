@@ -121,14 +121,7 @@ def generate_transactions_table(customer_profile, start_date = "2024-01-01", nb_
                                                       terminal_id, amount])
             
     customer_transactions = pd.DataFrame(customer_transactions, columns=['TX_DATETIME', 'TX_TIME_DAYS', 'CUSTOMER_ID', 'TERMINAL_ID', 'TX_AMOUNT'])
-    
-    # if len(customer_transactions)>0:
-    #     # datetime =  pd.to_datetime(customer_transactions["TX_TIME_SECONDS"], unit='s', origin=start_date)
-    #     # customer_transactions['TX_DATETIME'] = str(datetime).replace(' ', 'T')        
-    #     customer_transactions['TX_DATETIME'] = pd.to_datetime(customer_transactions["TX_TIME_SECONDS"], unit='s', origin=start_date) 
-    #     print(customer_transactions['TX_DATETIME'])
-    #     customer_transactions=customer_transactions[['TX_DATETIME','CUSTOMER_ID', 'TERMINAL_ID', 'TX_AMOUNT','TX_TIME_SECONDS', 'TX_TIME_DAYS']]
-    
+
     return customer_transactions  
     
 
@@ -174,18 +167,14 @@ def generate_dataset(n_customers = 10000, n_terminals = 11000, nb_days=180, star
                                                                                         start_date="2024-01-01", 
                                                                                         r=5)
 
-
 print(transactions_df.shape)
-
-# for i, row in enumerate(transactions_df):
-#     transactions_df.iloc[i][1] = datetime.strptime(str(transactions_df.iloc[i][1]) , "%Y-%m-%d %H:%M:%S")
-
 
 customer_profiles_table.to_csv('new_datasets/data_sets_200/customer.csv', index=False)
 terminal_profiles_table.to_csv('new_datasets/data_sets_200/terminal.csv', index=False)
 transactions_df.to_csv('new_datasets/data_sets_200/transaction.csv', index=True)
 
-file_path = 'new_datasets/data_sets_100/transaction.csv'
+# Size of the transaction 
+file_path = 'new_datasets/data_sets_200/transaction.csv'
 file_size = os.path.getsize(file_path) / (1024 * 1024)
 print(f"The size of '{file_path}' is: {file_size} MB")
 print(len(transactions_df))
