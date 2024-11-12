@@ -60,10 +60,3 @@ Neo4J) and provide a data modeling to optimize the execution of the following op
     
   e. For each period of the day identifies the number of transactions that occurred in that period,
   and the average number of fraudulent transactions.
-  
-4. Create a script for loading the considered datasets in the chosen NOSQL and develop the scripts for
-implementing the previous operations. Take in mind that depending on the identified system,
-primitives of the query language should be embedded in a Python script.
-
-6. Evaluate the execution times for all the previous operations (also the one for updating the NOSQL
-datastore) in the generated datasets
