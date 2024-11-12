@@ -58,5 +58,5 @@ Neo4J) and provide a data modeling to optimize the execution of the following op
   in the NOSQL database and can be queried. Note, two average feelings of security
   are considered similar when their difference is lower than 1.
     
-  e. For each period of the day identifies the number of transactions that occurred in that period,
+  e. For each period of the day identify the number of transactions that occurred in that period,
   and the average number of fraudulent transactions.
